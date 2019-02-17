@@ -1,10 +1,15 @@
 function bits() {
 
-    var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var chars = '-abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+';
 
     return {
-        toBase62: function () {
-            return chars[100 % 52];
+        numToChar: function (uint6) {
+            if (uint6 >= 0 && uint6 < 64) {
+                return chars[uint6];
+            } else {
+                console.error('Illegal argument', uint6);
+                return null;
+            }
         }
     };
 }
