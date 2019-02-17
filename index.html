@@ -10,7 +10,7 @@
     <meta name="application-name" content="Matrix editor"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="icon" href=​"https://matrix-editor.github.io/favicon.ico" type="image/x-icon">
+    <!--<link rel="icon" href=​"https://matrix-editor.github.io/favicon.ico" type="image/x-icon">-->
     <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/apple-touch-icon-57x57.png"/>
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/apple-touch-icon-114x114.png"/>
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/apple-touch-icon-72x72.png"/>
@@ -32,6 +32,7 @@
     <meta name="msapplication-wide310x150logo" content="/mstile-310x150.png"/>
     <meta name="msapplication-square310x310logo" content="/mstile-310x310.png"/>
 
+    <script src="/jquery-3.3.1.slim.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/styles.css?20190216"/>
     <script src="/scripts.js?20190216"></script>
 
@@ -46,7 +47,10 @@
     }
 </script>
 
-<body>
-TODO
+<body style="text-align: center" class="red-leds">
+<div style="display: inline-block">
+    <table id="matrix" class="noselect debug"></table>
+</div>
+
 </body>
 </html>

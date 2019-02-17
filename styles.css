@@ -1,0 +1,68 @@
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    background: #eee;
+}
+
+
+* {
+    padding: 0;
+    margin: 0;
+    outline: 0;
+    border: none;
+}
+
+.debug {
+    /*border: dashed red 1px;*/
+}
+
+.noselect {
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+#matrix {
+    background-color: #333;
+    box-shadow: 1px 1px 10px #333;
+    border-collapse: separate;
+    border-spacing: 5px;
+}
+
+#matrix .num,
+#matrix .led {
+    width: 25px;
+    min-width: 25px;
+    max-width: 25px;
+
+    height: 25px;
+    min-height: 25px;
+    max-height: 25px;
+    cursor: pointer;
+}
+
+#matrix .num {
+    font-family: "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace;
+    color: #CCC;
+    text-align: center;
+    font-size: 15px;
+}
+
+
+#matrix .led {
+    border-radius: 50%;
+    background: #808080 radial-gradient(ellipse at 42% 42%, #999999 0%, #808080 50%);
+}
+
+/*Color themes*/
+body.red-leds #matrix .num:hover,
+body.red-leds #matrix .num.hover {
+    color: #ff3333;
+    font-weight: bold;
+}
+
+body.red-leds #matrix .led.active {
+    background: #ff0000 radial-gradient(ellipse at 42% 42%, #ffffff 0%, #ff3300 25%, #ff0000 50%);
+}
