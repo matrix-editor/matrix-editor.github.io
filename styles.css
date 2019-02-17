@@ -5,6 +5,7 @@ html, body {
 
 body {
     background: #eee;
+    font-family: Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
 }
 
 
@@ -44,7 +45,6 @@ body {
 }
 
 #matrix .num {
-    font-family: "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace;
     color: #CCC;
     text-align: center;
     font-size: 15px;
@@ -64,5 +64,9 @@ body.red-leds #matrix .num.hover {
 }
 
 body.red-leds #matrix .led.active {
-    background: #ff0000 radial-gradient(ellipse at 42% 42%, #ffffff 0%, #ff3300 25%, #ff0000 50%);
+    background: #ff0000 radial-gradient(ellipse at 42% 42%, #ffffff 0%, #ff3300 25%, #ff0000 50%) !important;
+}
+
+body.red-leds #matrix .led:hover {
+    background: #ff000033 radial-gradient(ellipse at 42% 42%, #ffffff33 0%, #ff330033 25%, #ff000033 50%);
 }
