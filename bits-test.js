@@ -2,6 +2,6 @@
 Run tests using command:
   node bits-test.js
 */
-require('./bits.js');
+const bits = require('./bits.js');
 
-console.log('xxx');
+console.log(bits().toBase62());
