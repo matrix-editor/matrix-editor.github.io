@@ -1,4 +1,4 @@
-function bitmap(length) {
+function Bitmap(length) {
     const BASE = 6;
     const ZERO = '0'.repeat(BASE);
     const chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ~!';
@@ -104,5 +104,5 @@ function bitmap(length) {
 }
 
 if (typeof module !== 'undefined') {
-    module.exports = bitmap;
+    module.exports = Bitmap;
 }
