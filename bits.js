@@ -24,11 +24,10 @@ function bits() {
         const result = [];
         for (let i = 0; i < str.length; i++) {
             const chr = charsMap[str.charAt(i)];
-            if (chr !== undefined) {
-                result.push((ZERO + chr.toString(2)).substr(-BITS));
-            } else {
+            if (chr === undefined) {
                 throw 'Invalid char: ' + chr + ' in the ' + str;
             }
+            result.push((ZERO + chr.toString(2)).substr(-BITS));
         }
         fromBinaryString(result.join(''))
     }
