@@ -1,32 +1,53 @@
-function bits(initialData) {
-
+function bits() {
     const BASE = 64;
     const BITS = 6;
+    const ZERO = '0'.repeat(BITS);
     const chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ~!';
 
-    const data = initialData.split('').slice();
+    const charsMap = chars.split('').reduce(function (map, char, index) {
+        map[char] = index;
+        return map;
+    }, {});
+
+    let data = [];
 
     function numToChar(uint6) {
         return chars[uint6];
     }
 
-    return {
-        fromBinaryString: function (str) {
-            return bits(str.split(''));
-        },
-        fromCompressedString: function () {
+    function fromBinaryString(str) {
+        //todo validate
+        data = str.split('');
+    }
 
-        },
-        toCompressedString: function () {
-            const chunksCount = Math.ceil(data.length / BITS);
-            const result = [];
-            for (let i = 0; i < chunksCount; i++) {
-                const num = parseInt(data.slice(i * BITS, (i + 1) * BITS).join(''), 2);
-                result.push(numToChar(num));
+    function fromCompressedString(str) {
+        const result = [];
+        for (let i = 0; i < str.length; i++) {
+            const chr = charsMap[str.charAt(i)];
+            if (chr !== undefined) {
+                result.push((ZERO + chr.toString(2)).substr(-BITS));
+            } else {
+                throw 'Invalid char: ' + chr + ' in the ' + str;
             }
-
-            return result.join('').replace(/0+$/, '');
         }
+        fromBinaryString(result.join(''))
+    }
+
+    function toCompressedString() {
+        const chunksCount = Math.ceil(data.length / BITS);
+        const result = [];
+        for (let i = 0; i < chunksCount; i++) {
+            const num = parseInt(data.slice(i * BITS, (i + 1) * BITS).join(''), 2);
+            result.push(numToChar(num));
+        }
+
+        return result.join('').replace(/0+$/, '');
+    }
+
+    return {
+        fromBinaryString: fromBinaryString,
+        fromCompressedString: fromCompressedString,
+        toCompressedString: toCompressedString
     }
 }
 
