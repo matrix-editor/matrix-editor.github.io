@@ -2,24 +2,41 @@
 Run tests using command:
   node bitmap-test.js
 */
-const bitmap = require('./bitmap.js')();
+const bitmap = require('./bitmap.js')(64);
 
-{
-    bitmap.fromCompressedString('!0!');
-    console.assert(bitmap.toCompressedString() === '!0!');
+function checkBasics() {
+    console.assert(bitmap.toCompressedString() === '');
+
+    bitmap.reset();
+    console.assert(bitmap.toCompressedString() === '');
+
+    bitmap.setBit1(3);//000100
+    console.assert(bitmap.toCompressedString() === '4');
+
+    bitmap.setBit1(4);//000110
+    console.assert(bitmap.toCompressedString() === '6');
+
+    bitmap.setBit0(3);//000010
+    console.assert(bitmap.toCompressedString() === '2');
 }
 
-{
-    let sourceStr = '11111100' + '00001111' + '11';
-    bitmap.fromBinaryString(sourceStr);
-    let resultStr = bitmap.toCompressedString();
-    console.assert(resultStr === '!0!', sourceStr, resultStr);
+function checkBinaryToCompressed(sourceBinaryString, expectedCompressedString) {
+    bitmap.fromBinaryString(sourceBinaryString);
+    const resultStr = bitmap.toCompressedString();
+    console.assert(resultStr === expectedCompressedString, sourceBinaryString, resultStr);
 }
 
-{
-    let sourceStr = '11111100' + '00001111' + '110000';
-    bitmap.fromBinaryString(sourceStr);
-    let resultStr = bitmap.toCompressedString();
-    console.assert(resultStr === '!0!', sourceStr, resultStr);
+function checkCompressedToCompressed(sourceCompressedString, expectedCompressedString) {
+    bitmap.fromCompressedString(sourceCompressedString);
+    console.assert(bitmap.toCompressedString() === expectedCompressedString);
+    console.assert(bitmap.toCompressedString() === expectedCompressedString);
 }
 
+checkBasics();
+checkBinaryToCompressed('111111000000111111', '!0!');
+checkBinaryToCompressed('1111110000001111110000', '!0!');
+
+checkCompressedToCompressed('0', '');
+checkCompressedToCompressed('!0', '!');
+checkCompressedToCompressed('!0!', '!0!');
+checkCompressedToCompressed('!0!0', '!0!');

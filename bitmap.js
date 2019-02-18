@@ -8,17 +8,27 @@ function bitmap(length) {
         return map;
     }, {});
 
-    let data = [];
-    // data.length = length;
+    const data = [];
+
+    function reset() {
+        data.length = length;
+        for (let i = 0; i < length; i++) {
+            data[i] = 0;
+        }
+    }
 
     function fromBinaryString(str) {
-        data = [];
+        reset();
         for (let i = 0; i < str.length; i++) {
-            const char = str.charAt(i);
-            if (char === '0' && char === '1') {
-                data.push(char);
+            if (i < length) {
+                const char = str.charAt(i);
+                if (char === '0' || char === '1') {
+                    data[i] = char | 0;
+                } else {
+                    throw 'Invalid char: ' + char + ' in the ' + str;
+                }
             } else {
-                throw 'Invalid char: ' + char + ' in the ' + str;
+                throw 'Too long string: ' + str;
             }
         }
     }
@@ -71,7 +81,10 @@ function bitmap(length) {
         }
     }
 
+    reset();
+
     return {
+        reset: reset,
         getBit: getBit,
         setBit0: setBit0,
         setBit1: setBit1,
@@ -82,5 +95,5 @@ function bitmap(length) {
 }
 
 if (module) {
-    module.exports = bits;
+    module.exports = bitmap;
 }
