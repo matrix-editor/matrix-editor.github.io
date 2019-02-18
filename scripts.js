@@ -1,6 +1,6 @@
 $(function () {
     const $matrix = $('#matrix');
-    const bits = bits();
+
 
     function generateMatrix(rowsCount, colsCount) {
         const out = [];
@@ -26,13 +26,18 @@ $(function () {
         return out.join('');
     }
 
-    $matrix.html(generateMatrix(32, 32));
-
+    const W = 32;
+    const H = 32;
+    $matrix.html(generateMatrix(W, H));
+    const bitmap1 = bitmap(W * H);
 
     $matrix.find('.led').mousedown(function () {
         console.log(this);
         $(this).toggleClass('active');
-
+        const row = $(this).attr('data-row') - 1;
+        const col = $(this).attr('data-col') - 1;
+        bitmap1.toggleBit(row * W + col);
+        console.log(bitmap1.toCompressedString());
     });
 
     function framesToPatterns() {

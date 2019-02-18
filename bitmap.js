@@ -65,6 +65,14 @@ function bitmap(length) {
         }
     }
 
+    function toggleBit(index) {
+        if (data.length > index) {
+            data[index] = data[index] === 0 ? 1 : 0;
+        } else {
+            throw 'Invalid index: ' + index;
+        }
+    }
+
     function setBit0(index) {
         if (data.length > index) {
             data[index] = 0;
@@ -85,6 +93,7 @@ function bitmap(length) {
 
     return {
         reset: reset,
+        toggleBit: toggleBit,
         getBit: getBit,
         setBit0: setBit0,
         setBit1: setBit1,
@@ -94,6 +103,6 @@ function bitmap(length) {
     }
 }
 
-if (module) {
+if (typeof module !== 'undefined') {
     module.exports = bitmap;
 }
