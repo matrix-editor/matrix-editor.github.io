@@ -1,1 +1,0 @@
-node bits-test.js

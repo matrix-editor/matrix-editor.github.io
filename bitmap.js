@@ -1,4 +1,4 @@
-function bits() {
+function bitmap(length) {
     const BASE = 6;
     const ZERO = '0'.repeat(BASE);
     const chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ~!';
@@ -9,6 +9,7 @@ function bits() {
     }, {});
 
     let data = [];
+    // data.length = length;
 
     function fromBinaryString(str) {
         data = [];
