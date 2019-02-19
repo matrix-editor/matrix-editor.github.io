@@ -1,4 +1,6 @@
 $(function () {
+    const $body = $('body');
+
     const $matrix = $('#matrix');
 
     const W = 32;
@@ -38,7 +40,7 @@ $(function () {
 
     $matrix.find('.led').mousedown(function () {
         $(this).toggleClass('active');
-        const ledId = $(this).id.split('_');
+        const ledId = $(this).attr('id').split('_');
         const row = ledId[1] | 0;
         const col = ledId[2] | 0;
         bitmap.toggleBit(row * W + col);
@@ -53,6 +55,16 @@ $(function () {
                 $('#' + ledId(i, j)).toggleClass('active', bit);
             }
         }
+    }
+
+    // Theme
+    $('.leds-case').click(function () {
+        var themeName = $(this).attr('id');
+        setLedsTheme(themeName);
+    });
+
+    function setLedsTheme(themeName) {
+        $body.removeClass('red-leds yellow-leds green-leds blue-leds white-leds').addClass(themeName);
     }
 
     // State management
