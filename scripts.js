@@ -64,7 +64,7 @@ $(function () {
     });
 
     function setLedsTheme(themeName) {
-        $body.removeClass('red-leds yellow-leds green-leds blue-leds white-leds').addClass(themeName);
+        $body.removeClass('red-leds yellow-leds green-leds blue-leds white-leds black-leds').addClass(themeName);
     }
 
     // State management
