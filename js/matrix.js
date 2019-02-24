@@ -1,10 +1,11 @@
-$(function () {
+function Matrix() {
+    let _state;
     const $body = $('body');
 
     const $matrix = $('#matrix');
 
-    const W = 32;
-    const H = 32;
+    const W = 16;
+    const H = 16;
 
 
     function ledId(row, col) {
@@ -36,7 +37,7 @@ $(function () {
     }
 
     $matrix.html(generateMatrix(W, H));
-    const bitmap = Bitmap(W * H);
+    const bitmap = Bitmap(W, H);
 
     $matrix.find('.led').mousedown(function () {
         $(this).toggleClass('active');
@@ -44,11 +45,15 @@ $(function () {
         const row = ledId[1] | 0;
         const col = ledId[2] | 0;
         bitmap.toggleBit(row * W + col);
-        saveState(bitmap.toCompressedString());
+        _state.saveState(bitmap.toCompactString());
     });
 
-    function reloadFromCompressedString(compressedString) {
-        bitmap.fromCompressedString(compressedString);
+    function reloadFromCompactString(compressedString) {
+        bitmap.fromCompactString(compressedString);
+        render();
+    }
+
+    function render() {
         for (let i = 0; i < H; i++) {
             for (let j = 0; j < W; j++) {
                 const bit = !!bitmap.getBit(i * W + j);
@@ -57,36 +62,39 @@ $(function () {
         }
     }
 
-    // Theme
-    $('.leds-case').click(function () {
-        var themeName = $(this).attr('id');
-        setLedsTheme(themeName);
-    });
+    function init(state) {
+        _state = state;
 
-    function setLedsTheme(themeName) {
-        $body.removeClass('red-leds yellow-leds green-leds blue-leds white-leds black-leds').addClass(themeName);
     }
 
-    // State management
-    let savedHashState;
-
-    function saveState(compressedString) {
-        window.location.hash = savedHashState = compressedString;
-        console.log('Save state', savedHashState);
+    function todo() {
+        console.log('todo');
     }
 
-    function loadState() {
-        const state = window.location.hash.slice(1);
-        if (state !== savedHashState) {
-            savedHashState = state;
-            console.log('Load state', savedHashState);
-            reloadFromCompressedString(savedHashState);
-        }
+    return {
+        init: init,
+        loadFromCompactString: function (compactString) {
+            reloadFromCompactString(compactString);
+        },
+        invert: function () {
+            _state.saveState(bitmap.invert().toCompactString());
+            render();
+        },
+        shiftUp: function () {
+            _state.saveState(bitmap.shiftUp().toCompactString());
+            render();
+        },
+        shiftDown: function () {
+            _state.saveState(bitmap.shiftDown().toCompactString());
+            render();
+        },
+        shiftLeft: function () {
+            _state.saveState(bitmap.shiftLeft().toCompactString());
+            render();
+        },
+        shiftRight: function () {
+            _state.saveState(bitmap.shiftRight().toCompactString());
+            render();
+        },
     }
-
-    $(window).on('hashchange', loadState);
-    loadState();
-});
-
-
-
+}

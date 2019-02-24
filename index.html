@@ -6,37 +6,41 @@
 
     <meta name="keywords" content="led matrix, matrix editor, matrix animation">
     <meta name="description" content="Online matrix editor">
-    <meta name="author" content="Xantorohara"/>
-    <meta name="application-name" content="Matrix editor"/>
+    <meta name="author" content="Xantorohara">
+    <meta name="application-name" content="Matrix editor">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!--<link rel="icon" href=​"https://matrix-editor.github.io/favicon.ico" type="image/x-icon">-->
-    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/img/apple-touch-icon-57x57.png"/>
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/img/apple-touch-icon-114x114.png"/>
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/img/apple-touch-icon-72x72.png"/>
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/img/apple-touch-icon-144x144.png"/>
-    <link rel="apple-touch-icon-precomposed" sizes="60x60" href="/img/apple-touch-icon-60x60.png"/>
-    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="/img/apple-touch-icon-120x120.png"/>
-    <link rel="apple-touch-icon-precomposed" sizes="76x76" href="/img/apple-touch-icon-76x76.png"/>
-    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/img/apple-touch-icon-152x152.png"/>
-    <link rel="icon" type="image/png" sizes="196x196" href="/img/favicon-196x196.png"/>
-    <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png"/>
-    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png"/>
-    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png"/>
-    <link rel="icon" type="image/png" sizes="128x128" href="/img/favicon-128.png"/>
+    <!--<link rel="icon" type="image/x-icon" href="https://matrix-editor.github.io/favicon.ico">-->
 
-    <meta name="msapplication-TileColor" content="#FFFFFF"/>
-    <meta name="msapplication-TileImage" content="/img/mstile-144x144.png"/>
-    <meta name="msapplication-square70x70logo" content="/img/mstile-70x70.png"/>
-    <meta name="msapplication-square150x150logo" content="/img/mstile-150x150.png"/>
-    <meta name="msapplication-wide310x150logo" content="/img/mstile-310x150.png"/>
-    <meta name="msapplication-square310x310logo" content="/img/mstile-310x310.png"/>
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/img/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/img/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/img/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/img/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon-precomposed" sizes="60x60" href="/img/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="/img/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon-precomposed" sizes="76x76" href="/img/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/img/apple-touch-icon-152x152.png">
+    <link rel="icon" type="image/png" sizes="196x196" href="/img/favicon-196x196.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="128x128" href="/img/favicon-128.png">
+
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta name="msapplication-TileImage" content="/img/mstile-144x144.png">
+    <meta name="msapplication-square70x70logo" content="/img/mstile-70x70.png">
+    <meta name="msapplication-square150x150logo" content="/img/mstile-150x150.png">
+    <meta name="msapplication-wide310x150logo" content="/img/mstile-310x150.png">
+    <meta name="msapplication-square310x310logo" content="/img/mstile-310x310.png">
 
     <script src="/lib/jquery-3.3.1.slim.min.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="/styles.css?20190216"/>
-    <script src="/bitmap.js?20190216"></script>
-    <script src="/scripts.js?20190216"></script>
+    <link rel="stylesheet" type="text/css" href="/styles.css?20190216">
+
+    <script src="/js/bitmap.js?20190216"></script>
+    <script src="/js/controls.js?20190216"></script>
+    <script src="/js/matrix.js?20190216"></script>
+    <script src="/js/state.js?20190216"></script>
 
 </head>
 <script type="application/ld+json">
@@ -49,6 +53,18 @@
     }
 </script>
 
+<script>
+    $(function () {
+        const matrix = Matrix();
+        const controls = Controls();
+        const state = State();
+
+        matrix.init(state);
+        state.init(matrix);
+        controls.init(matrix);
+    });
+</script>
+
 <body style="text-align: center" class="red-leds">
 
 <div>
@@ -58,6 +74,14 @@
     <div id="blue-leds" class="leds-case"></div>
     <div id="white-leds" class="leds-case"></div>
     <div id="black-leds" class="leds-case"></div>
+</div>
+
+<div>
+    <button id="invert-button">Invert</button>
+    <button id="shift-up-button">Shift up</button>
+    <button id="shift-down-button">Shift down</button>
+    <button id="shift-left-button">Shift left</button>
+    <button id="shift-right-button">Shift right</button>
 </div>
 
 <div style="display: inline-block">

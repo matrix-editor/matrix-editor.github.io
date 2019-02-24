@@ -1,7 +1,10 @@
-function Bitmap(length) {
-    const BASE = 6;
+function Bitmap(width, height) {
+    const SIZE = width * height;
+    const BASE = 5;
+
     const ZERO = '0'.repeat(BASE);
-    const chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ~!';
+
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
 
     const charsMap = chars.split('').reduce(function (map, char, index) {
         map[char] = index;
@@ -11,16 +14,15 @@ function Bitmap(length) {
     const data = [];
 
     function reset() {
-        data.length = length;
-        for (let i = 0; i < length; i++) {
-            data[i] = 0;
-        }
+        data.length = SIZE;
+        data.fill(0);
+        return controls;
     }
 
     function fromBinaryString(str) {
         reset();
         for (let i = 0; i < str.length; i++) {
-            if (i < length) {
+            if (i < SIZE) {
                 const char = str.charAt(i);
                 if (char === '0' || char === '1') {
                     data[i] = char | 0;
@@ -31,9 +33,10 @@ function Bitmap(length) {
                 throw 'Too long string: ' + str;
             }
         }
+        return controls;
     }
 
-    function fromCompressedString(str) {
+    function fromCompactString(str) {
         const result = [];
         for (let i = 0; i < str.length; i++) {
             const char = str.charAt(i);
@@ -44,17 +47,21 @@ function Bitmap(length) {
                 result.push((ZERO + byte.toString(2)).substr(-BASE));
             }
         }
-        fromBinaryString(result.join(''))
+        return fromBinaryString(result.join(''))
     }
 
-    function toCompressedString() {
+    function toCompactString() {
         const chunksCount = Math.ceil(data.length / BASE);
         const result = [];
         for (let i = 0; i < chunksCount; i++) {
             const num = parseInt(data.slice(i * BASE, (i + 1) * BASE).join(''), 2);
             result.push(chars[num]);
         }
-        return result.join('').replace(/0+$/, '');
+        return result.join('').replace(/A+$/, '');
+    }
+
+    function toBinaryString() {
+        return data.join('');
     }
 
     function getBit(index) {
@@ -71,6 +78,7 @@ function Bitmap(length) {
         } else {
             throw 'Invalid index: ' + index;
         }
+        return controls;
     }
 
     function setBit0(index) {
@@ -79,6 +87,7 @@ function Bitmap(length) {
         } else {
             throw 'Invalid index: ' + index;
         }
+        return controls;
     }
 
     function setBit1(index) {
@@ -87,20 +96,70 @@ function Bitmap(length) {
         } else {
             throw 'Invalid index: ' + index;
         }
+        return controls;
     }
 
-    reset();
+    function invert() {
+        for (let i = 0; i < data.length; i++) {
+            data[i] = data[i] === 0 ? 1 : 0;
+        }
+        return controls;
+    }
 
-    return {
+    function shiftUp() {
+        for (let i = width; i < SIZE; i++) {
+            data [i - width] = data [i];
+        }
+        data.fill(0, data.length - width, data.length);
+        return controls;
+    }
+
+    function shiftDown() {
+        for (let i = SIZE - 1; i >= width; i--) {
+            data [i] = data [i - width];
+        }
+        data.fill(0, 0, width);
+        return controls;
+    }
+
+    function shiftLeft() {
+        for (let i = 0; i < height; i++) {
+            for (let j = 0; j < width - 1; j++) {
+                data [i * width + j] = data [i * width + j + 1];
+            }
+            data [(i + 1) * width - 1] = 0;
+        }
+        return controls;
+    }
+
+    function shiftRight() {
+        for (let i = 0; i < height; i++) {
+            for (let j = width - 1; j > 0; j--) {
+                data [i * width + j] = data [i * width + j - 1];
+            }
+            data [i * width] = 0;
+        }
+        return controls;
+    }
+
+    const controls = {
         reset: reset,
+        invert: invert,
+        shiftUp: shiftUp,
+        shiftDown: shiftDown,
+        shiftLeft: shiftLeft,
+        shiftRight: shiftRight,
         toggleBit: toggleBit,
         getBit: getBit,
         setBit0: setBit0,
         setBit1: setBit1,
         fromBinaryString: fromBinaryString,
-        fromCompressedString: fromCompressedString,
-        toCompressedString: toCompressedString
-    }
+        toBinaryString: toBinaryString,
+        fromCompactString: fromCompactString,
+        toCompactString: toCompactString
+    };
+
+    return reset();
 }
 
 if (typeof module !== 'undefined') {
