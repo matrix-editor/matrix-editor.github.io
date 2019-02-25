@@ -92,6 +92,19 @@ function Bitmap(width, height) {
 
     function toggleRow(index) {
         if (index >= 0 && index < height) {
+            let count = 0;
+            for (let i = 0; i < width; i++) {
+                count += data[index * width + i];
+            }
+            for (let i = 0; i < width; i++) {
+                data[index * width + i] = count === width ? 0 : 1;
+            }
+        }
+        return controls;
+    }
+
+    function invertRow(index) {
+        if (index >= 0 && index < height) {
             for (let i = 0; i < width; i++) {
                 data[index * width + i] = data[index * width + i] ? 0 : 1;
             }
@@ -170,6 +183,7 @@ function Bitmap(width, height) {
         toggleBit: toggleBit,
         toggleCol: toggleCol,
         toggleRow: toggleRow,
+        invertRow: invertRow,
         getBit: getBit,
         setBit0: setBit0,
         setBit1: setBit1,

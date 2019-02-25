@@ -24,8 +24,10 @@ function Matrix() {
                         out.push('<td class="num col" data-col="' + j + '">' + j + '</td>');
                     }
                 } else {
-                    if (j === 0 || j === colsCount + 1) {
-                        out.push('<td class="num row" data-row="' + i + '">' + i + '</td>');
+                    if (j === 0) {
+                        out.push('<td class="num row-toggle" data-row="' + i + '">' + i + '</td>');
+                    } else if (j === colsCount + 1) {
+                        out.push('<td class="num row-invert" data-row="' + i + '">' + i + '</td>');
                     } else {
                         out.push('<td class="led" id="' + ledId(i - 1, j - 1) + '"></td>');
                     }
@@ -83,7 +85,13 @@ function Matrix() {
         renderAndSaveState();
     });
 
-    $matrix.find('.num.row').mousedown(function () {
+    $matrix.find('.num.row-invert').mousedown(function () {
+        const data = $(this).attr('data-row') - 1;
+        bitmap.invertRow(data);
+        renderAndSaveState();
+    });
+
+    $matrix.find('.num.row-toggle').mousedown(function () {
         const data = $(this).attr('data-row') - 1;
         bitmap.toggleRow(data);
         renderAndSaveState();
