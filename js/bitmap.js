@@ -117,6 +117,15 @@ function Bitmap(width, height) {
         return controls;
     }
 
+    function invertCol(index) {
+        if (index >= 0 && index < width) {
+            for (let i = 0; i < height; i++) {
+                data[i * width + index] = data[i * width + index] ? 0 : 1;
+            }
+        }
+        return controls;
+    }
+
     function setBit0(index) {
         if (data.length > index) {
             data[index] = 0;
