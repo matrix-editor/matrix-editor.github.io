@@ -5,6 +5,7 @@ function Bitmap(width, height) {
     const ZERO = '0'.repeat(BASE);
 
     const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    const kds = 'abcdefghijkmnopqrstuvwxyz';
 
     const charsMap = chars.split('').reduce(function (map, char, index) {
         map[char] = index;
@@ -52,12 +53,31 @@ function Bitmap(width, height) {
 
     function toCompactString() {
         const chunksCount = Math.ceil(data.length / BASE);
-        const result = [];
+        const resultBase = [];
         for (let i = 0; i < chunksCount; i++) {
             const num = parseInt(data.slice(i * BASE, (i + 1) * BASE).join(''), 2);
-            result.push(chars[num]);
+            resultBase.push(chars[num]);
         }
-        return result.join('').replace(/A+$/, '');
+        // return resultBase.join('').replace(/A+$/, '');
+
+        const resultKds = [];
+        let seriesChar = resultBase[0];
+        let seriesCount = 0;
+        for (let i = 1; i <= resultBase.length; i++) {
+            if (seriesChar === resultBase[i] && seriesCount < kds.length - 1) {
+                seriesCount++;
+            } else {
+                console.log(seriesChar, seriesCount);
+                resultKds.push(seriesChar);
+                if (seriesCount > 1) {
+                    resultKds.push(kds.charAt(seriesCount));
+                }
+                seriesChar = resultBase[i];
+                seriesCount = 0;
+            }
+        }
+        console.log(resultKds);
+        return resultKds.join('');
     }
 
     function toBinaryString() {
