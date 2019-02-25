@@ -14,17 +14,17 @@ function Matrix() {
 
     function generateMatrix(rowsCount, colsCount) {
         const out = [];
-        for (let i = 0; i <= rowsCount; i++) {
+        for (let i = 0; i < rowsCount + 2; i++) {
             out.push('<tr>');
-            for (let j = 0; j <= colsCount; j++) {
-                if (i === 0) {
+            for (let j = 0; j < colsCount + 2; j++) {
+                if (i === 0 || i === rowsCount + 1) {
                     if (j === 0) {
                         out.push('<td class="num invert" title="Invert">i</td>');
-                    } else {
+                    } else if (j <= colsCount) {
                         out.push('<td class="num col" data-col="' + j + '">' + j + '</td>');
                     }
                 } else {
-                    if (j === 0) {
+                    if (j === 0 || j === colsCount + 1) {
                         out.push('<td class="num row" data-row="' + i + '">' + i + '</td>');
                     } else {
                         out.push('<td class="led" id="' + ledId(i - 1, j - 1) + '"></td>');
