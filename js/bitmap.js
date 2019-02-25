@@ -44,7 +44,7 @@ function Bitmap(width, height) {
             if (byte === undefined) {
                 throw 'Invalid char: ' + char + ' in the ' + str;
             } else {
-                result.push((ZERO + byte.toString(2)).substr(-BASE));
+                result.push(byte.toString(2));
             }
         }
         return fromBinaryString(result.join(''))
@@ -77,6 +77,24 @@ function Bitmap(width, height) {
             data[index] = data[index] === 0 ? 1 : 0;
         } else {
             throw 'Invalid index: ' + index;
+        }
+        return controls;
+    }
+
+    function toggleCol(index) {
+        if (index >= 0 && index < width) {
+            for (let i = 0; i < height; i++) {
+                data[i * width + index] = data[i * width + index] ? 0 : 1;
+            }
+        }
+        return controls;
+    }
+
+    function toggleRow(index) {
+        if (index >= 0 && index < height) {
+            for (let i = 0; i < width; i++) {
+                data[index * width + i] = data[index * width + i] ? 0 : 1;
+            }
         }
         return controls;
     }
@@ -150,6 +168,8 @@ function Bitmap(width, height) {
         shiftLeft: shiftLeft,
         shiftRight: shiftRight,
         toggleBit: toggleBit,
+        toggleCol: toggleCol,
+        toggleRow: toggleRow,
         getBit: getBit,
         setBit0: setBit0,
         setBit1: setBit1,

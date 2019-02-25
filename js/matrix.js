@@ -19,13 +19,13 @@ function Matrix() {
             for (let j = 0; j <= colsCount; j++) {
                 if (i === 0) {
                     if (j === 0) {
-                        out.push('<td class="num" data-row="' + i + '" data-col="' + j + '">X</td>');
+                        out.push('<td class="num invert" title="Invert">i</td>');
                     } else {
-                        out.push('<td class="num" data-row="' + i + '" data-col="' + j + '">' + j + '</td>');
+                        out.push('<td class="num col" data-col="' + j + '">' + j + '</td>');
                     }
                 } else {
                     if (j === 0) {
-                        out.push('<td class="num" data-row="' + i + '" data-col="' + j + '">' + i + '</td>');
+                        out.push('<td class="num row" data-row="' + i + '">' + i + '</td>');
                     } else {
                         out.push('<td class="led" id="' + ledId(i - 1, j - 1) + '"></td>');
                     }
@@ -38,15 +38,6 @@ function Matrix() {
 
     $matrix.html(generateMatrix(W, H));
     const bitmap = Bitmap(W, H);
-
-    $matrix.find('.led').mousedown(function () {
-        $(this).toggleClass('active');
-        const ledId = $(this).attr('id').split('_');
-        const row = ledId[1] | 0;
-        const col = ledId[2] | 0;
-        bitmap.toggleBit(row * W + col);
-        _state.saveState(bitmap.toCompactString());
-    });
 
     function reloadFromCompactString(compressedString) {
         bitmap.fromCompactString(compressedString);
@@ -67,9 +58,42 @@ function Matrix() {
 
     }
 
+    function renderAndSaveState() {
+        render();
+        _state.saveState(bitmap.toCompactString());
+    }
+
     function todo() {
         console.log('todo');
     }
+
+
+    $matrix.find('.led').mousedown(function () {
+        $(this).toggleClass('active');
+        const ledId = $(this).attr('id').split('_');
+        const row = ledId[1] | 0;
+        const col = ledId[2] | 0;
+        bitmap.toggleBit(row * W + col);
+        renderAndSaveState();
+
+    });
+
+    $matrix.find('.num.invert').mousedown(function () {
+        bitmap.invert();
+        renderAndSaveState();
+    });
+
+    $matrix.find('.num.row').mousedown(function () {
+        const data = $(this).attr('data-row') - 1;
+        bitmap.toggleRow(data);
+        renderAndSaveState();
+    });
+
+    $matrix.find('.num.col').mousedown(function () {
+        const data = $(this).attr('data-col') - 1;
+        bitmap.toggleCol(data);
+        renderAndSaveState();
+    });
 
     return {
         init: init,
@@ -77,24 +101,24 @@ function Matrix() {
             reloadFromCompactString(compactString);
         },
         invert: function () {
-            _state.saveState(bitmap.invert().toCompactString());
-            render();
+            bitmap.invert();
+            renderAndSaveState();
         },
         shiftUp: function () {
-            _state.saveState(bitmap.shiftUp().toCompactString());
-            render();
+            bitmap.shiftUp();
+            renderAndSaveState();
         },
         shiftDown: function () {
-            _state.saveState(bitmap.shiftDown().toCompactString());
-            render();
+            bitmap.shiftDown();
+            renderAndSaveState();
         },
         shiftLeft: function () {
-            _state.saveState(bitmap.shiftLeft().toCompactString());
-            render();
+            bitmap.shiftLeft();
+            renderAndSaveState();
         },
         shiftRight: function () {
-            _state.saveState(bitmap.shiftRight().toCompactString());
-            render();
+            bitmap.shiftRight();
+            renderAndSaveState();
         },
     }
 }
