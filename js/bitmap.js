@@ -83,8 +83,13 @@ function Bitmap(width, height) {
 
     function toggleCol(index) {
         if (index >= 0 && index < width) {
+            let count1 = 0;
             for (let i = 0; i < height; i++) {
-                data[i * width + index] = data[i * width + index] ? 0 : 1;
+                count1 += data[i * width + index];
+            }
+
+            for (let i = 0; i < height; i++) {
+                data[i * width + index] = count1 === height ? 0 : 1;
             }
         }
         return controls;
@@ -92,12 +97,12 @@ function Bitmap(width, height) {
 
     function toggleRow(index) {
         if (index >= 0 && index < height) {
-            let count = 0;
+            let count1 = 0;
             for (let i = 0; i < width; i++) {
-                count += data[index * width + i];
+                count1 += data[index * width + i];
             }
             for (let i = 0; i < width; i++) {
-                data[index * width + i] = count === width ? 0 : 1;
+                data[index * width + i] = count1 === width ? 0 : 1;
             }
         }
         return controls;
@@ -133,6 +138,17 @@ function Bitmap(width, height) {
     function invert() {
         for (let i = 0; i < data.length; i++) {
             data[i] = data[i] === 0 ? 1 : 0;
+        }
+        return controls;
+    }
+
+    function toggle() {
+        let count1 = 0;
+        for (let i = 0; i < data.length; i++) {
+            count1 += data[i];
+        }
+        for (let i = 0; i < data.length; i++) {
+            data[i] = count1 === data.length ? 0 : 1;
         }
         return controls;
     }
@@ -176,6 +192,7 @@ function Bitmap(width, height) {
     const controls = {
         reset: reset,
         invert: invert,
+        toggle: toggle,
         shiftUp: shiftUp,
         shiftDown: shiftDown,
         shiftLeft: shiftLeft,
@@ -184,6 +201,7 @@ function Bitmap(width, height) {
         toggleCol: toggleCol,
         toggleRow: toggleRow,
         invertRow: invertRow,
+        invertCol: invertCol,
         getBit: getBit,
         setBit0: setBit0,
         setBit1: setBit1,

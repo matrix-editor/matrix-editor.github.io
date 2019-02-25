@@ -17,17 +17,27 @@ function Matrix() {
         for (let i = 0; i < rowsCount + 2; i++) {
             out.push('<tr>');
             for (let j = 0; j < colsCount + 2; j++) {
-                if (i === 0 || i === rowsCount + 1) {
+                if (i === 0) {
                     if (j === 0) {
                         out.push('<td class="num invert" title="Invert">i</td>');
                     } else if (j <= colsCount) {
-                        out.push('<td class="num col" data-col="' + j + '">' + j + '</td>');
+                        out.push('<td class="num col-invert" data-col="' + j + '">' + j + '</td>');
+                    } else {
+                        out.push('<td class="num"></td>');
+                    }
+                } else if (i === rowsCount + 1) {
+                    if (j === 0) {
+                        out.push('<td class="num"></td>');
+                    } else if (j === colsCount + 1) {
+                        out.push('<td class="num toggle" title="Toggle">T</td>');
+                    } else if (j <= colsCount) {
+                        out.push('<td class="num col-toggle" data-col="' + j + '">' + j + '</td>');
                     }
                 } else {
                     if (j === 0) {
-                        out.push('<td class="num row-toggle" data-row="' + i + '">' + i + '</td>');
-                    } else if (j === colsCount + 1) {
                         out.push('<td class="num row-invert" data-row="' + i + '">' + i + '</td>');
+                    } else if (j === colsCount + 1) {
+                        out.push('<td class="num row-toggle" data-row="' + i + '">' + i + '</td>');
                     } else {
                         out.push('<td class="led" id="' + ledId(i - 1, j - 1) + '"></td>');
                     }
@@ -85,6 +95,11 @@ function Matrix() {
         renderAndSaveState();
     });
 
+    $matrix.find('.num.toggle').mousedown(function () {
+        bitmap.toggle();
+        renderAndSaveState();
+    });
+
     $matrix.find('.num.row-invert').mousedown(function () {
         const data = $(this).attr('data-row') - 1;
         bitmap.invertRow(data);
@@ -97,7 +112,13 @@ function Matrix() {
         renderAndSaveState();
     });
 
-    $matrix.find('.num.col').mousedown(function () {
+    $matrix.find('.num.col-invert').mousedown(function () {
+        const data = $(this).attr('data-col') - 1;
+        bitmap.invertCol(data);
+        renderAndSaveState();
+    });
+
+    $matrix.find('.num.col-toggle').mousedown(function () {
         const data = $(this).attr('data-col') - 1;
         bitmap.toggleCol(data);
         renderAndSaveState();
