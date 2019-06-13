@@ -34,6 +34,7 @@
     <meta name="msapplication-square310x310logo" content="/img/mstile-310x310.png">
 
     <script src="/lib/jquery-3.3.1.slim.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href="/styles.css?20190216">
 
@@ -67,30 +68,33 @@
 
 <body style="text-align: center" class="red-leds">
 
-
-<div>
-    <a href="/">/</a>
-    <div id="red-leds" class="leds-case"></div>
-    <div id="yellow-leds" class="leds-case"></div>
-    <div id="green-leds" class="leds-case"></div>
-    <div id="blue-leds" class="leds-case"></div>
-    <div id="white-leds" class="leds-case"></div>
-    <div id="black-leds" class="leds-case"></div>
-    <input id="width-input" type="number" min="1" max="64">
-    <input id="height-input" type="number" min="1" max="64">
-</div>
-
-<div>
-    <button id="invert-button">Invert</button>
-    <button id="clear-button">Clear</button>
-    <button id="shift-up-button">Shift up</button>
-    <button id="shift-down-button">Shift down</button>
-    <button id="shift-left-button">Shift left</button>
-    <button id="shift-right-button">Shift right</button>
+<div style="display: flex; justify-content: space-between">
+    <div>
+        <input id="width-input" type="number" min="1" max="64" value="16">
+        <input id="height-input" type="number" min="1" max="64" value="16">
+    </div>
+    <div>
+        <div id="red-leds" class="leds-case"></div>
+        <div id="yellow-leds" class="leds-case"></div>
+        <div id="green-leds" class="leds-case"></div>
+        <div id="blue-leds" class="leds-case"></div>
+        <div id="white-leds" class="leds-case"></div>
+        <div id="black-leds" class="leds-case"></div>
+    </div>
 </div>
 
 <div style="display: inline-block">
     <table id="matrix" class="noselect debug"></table>
+</div>
+
+<div>
+    <button id="invert-button" title="Invert"><i class="material-icons">invert_colors</i></button>
+    <button id="clear-button" title="Clear"><i class="material-icons">clear</i></button>
+    <button id="shift-up-button" title="Shift up"><i class="material-icons">expand_less</i></button>
+    <button id="shift-down-button" title="Shift down"><i class="material-icons">expand_more</i></button>
+    <button id="shift-left-button" title="Shift left"><i class="material-icons">chevron_left</i></button>
+    <button id="shift-right-button" title="Shift right"><i class="material-icons">chevron_right</i></button>
+
 </div>
 
 </body>

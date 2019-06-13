@@ -13,12 +13,16 @@ function Controls() {
 
         $('.leds-case').click(function () {
             const themeName = $(this).attr('id');
-            setLedsTheme(themeName);
+            $('body').removeClass('red-leds yellow-leds green-leds blue-leds white-leds black-leds').addClass(themeName);
         });
 
-        function setLedsTheme(themeName) {
-            $('body').removeClass('red-leds yellow-leds green-leds blue-leds white-leds black-leds').addClass(themeName);
-        }
+        $('#width-input').change(function () {
+            _matrix.setup($('#width-input').val() | 0, $('#height-input').val() | 0);
+        });
+
+        $('#height-input').change(function () {
+            _matrix.setup($('#width-input').val() | 0, $('#height-input').val() | 0);
+        });
     }
 
     return {

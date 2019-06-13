@@ -4,7 +4,7 @@ html, body {
 }
 
 body {
-    background: #eee;
+    background: #888;
     font-family: Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
 }
 
@@ -139,4 +139,11 @@ body.black-leds #matrix .num.hover {
 #black-leds,
 body.black-leds #matrix .led.active {
     background: #333 radial-gradient(ellipse at 42% 42%, #333 0%, #000 25%, #333 50%);
+}
+
+button {
+    padding: 5px;
+    margin: 5px;
+    border: solid 1px lightgray;
+    border-radius: 5px;
 }
