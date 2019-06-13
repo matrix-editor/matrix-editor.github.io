@@ -29,7 +29,7 @@ function Matrix() {
                     if (j === 0) {
                         out.push('<td class="num"></td>');
                     } else if (j === colsCount + 1) {
-                        out.push('<td class="num toggle" title="Toggle">T</td>');
+                        out.push('<td class="num clear" title="Clear">C</td>');
                     } else if (j <= colsCount) {
                         out.push('<td class="num col-toggle" data-col="' + j + '">' + j + '</td>');
                     }
@@ -95,8 +95,8 @@ function Matrix() {
         renderAndSaveState();
     });
 
-    $matrix.find('.num.toggle').mousedown(function () {
-        bitmap.toggle();
+    $matrix.find('.num.clear').mousedown(function () {
+        bitmap.clear();
         renderAndSaveState();
     });
 
@@ -131,6 +131,10 @@ function Matrix() {
         },
         invert: function () {
             bitmap.invert();
+            renderAndSaveState();
+        },
+        clear: function () {
+            bitmap.reset();
             renderAndSaveState();
         },
         shiftUp: function () {

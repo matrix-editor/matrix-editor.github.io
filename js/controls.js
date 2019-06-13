@@ -5,6 +5,7 @@ function Controls() {
         _matrix = matrix;
 
         $('#invert-button').click(_matrix.invert);
+        $('#clear-button').click(_matrix.clear);
         $('#shift-up-button').click(_matrix.shiftUp);
         $('#shift-down-button').click(_matrix.shiftDown);
         $('#shift-left-button').click(_matrix.shiftLeft);

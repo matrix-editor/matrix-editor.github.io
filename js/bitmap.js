@@ -201,7 +201,6 @@ function Bitmap(width, height) {
     const controls = {
         reset: reset,
         invert: invert,
-        toggle: toggle,
         shiftUp: shiftUp,
         shiftDown: shiftDown,
         shiftLeft: shiftLeft,
