@@ -41,7 +41,7 @@
     <script src="/js/bitmap.js?20190216"></script>
     <script src="/js/controls.js?20190216"></script>
     <script src="/js/matrix.js?20190216"></script>
-    <script src="/js/state.js?20190216"></script>
+    <script src="/js/stateManager.js?20190216"></script>
 
 </head>
 <script type="application/ld+json">
@@ -58,7 +58,7 @@
     $(function () {
         const matrix = Matrix();
         const controls = Controls();
-        const state = State();
+        const state = StateManager();
 
         matrix.init(state);
 
