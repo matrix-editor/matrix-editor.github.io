@@ -12,8 +12,9 @@ function Controls() {
         $('#shift-right-button').click(_matrix.shiftRight);
 
         $('.leds-case').click(function () {
-            const themeName = $(this).attr('id');
-            $('body').removeClass('red-leds yellow-leds green-leds blue-leds white-leds black-leds').addClass(themeName);
+            // const themeName = $(this).attr('id');
+            // $('body').removeClass('red-leds yellow-leds green-leds blue-leds white-leds black-leds').addClass(themeName);
+
         });
 
         $('#width-input').change(function () {
