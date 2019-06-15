@@ -44,7 +44,7 @@ function Bitmap(width, height) {
             if (byte === undefined) {
                 throw 'Invalid char: ' + char + ' in the ' + str;
             } else {
-                result.push(byte.toString(2));
+                result.push((ZERO + byte.toString(2)).substr(-5, 5));
             }
         }
         return fromBinaryString(result.join(''))

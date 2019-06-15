@@ -19,12 +19,17 @@ function State() {
                     data: tmp[3]
                 };
                 stateString = hashStateString;
-                console.log('Loaded state', stateString);
-                onStateChanged(state);
             } else {
-                console.error('Invalid state', hashStateString);
+                state = {
+                    width: 1,
+                    height: 1,
+                    data: ''
+                };
+                console.warn('Invalid state', hashStateString);
             }
         }
+        console.log('Loading state', stateString);
+        onStateChanged(state);
     }
 
     function setState(newState) {

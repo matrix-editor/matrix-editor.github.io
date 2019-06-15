@@ -15,6 +15,8 @@ const bitmap1x1 = Bitmap(1, 1);
 
 console.log('Basics');
 assertEquals(bitmap16x16.toCompactString(), '');
+assertEquals(bitmap16x16.setBit1(1).toCompactString(), 'J', '000001');
+assertEquals(bitmap16x16.setBit0(1).toCompactString(), '', '000000');
 assertEquals(bitmap16x16.setBit1(3).toCompactString(), 'C', '000100');
 assertEquals(bitmap16x16.setBit1(4).toCompactString(), 'D', '000110');
 assertEquals(bitmap16x16.setBit0(3).toCompactString(), 'B', '000010');
