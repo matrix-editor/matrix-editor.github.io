@@ -1,7 +1,9 @@
 function Controls() {
     let _matrix;
+    let _stateManager;
 
-    function init(matrix) {
+    function init(stateManager, matrix) {
+        _stateManager = stateManager;
         _matrix = matrix;
 
         $('#invert-button').click(_matrix.invert);
@@ -12,8 +14,9 @@ function Controls() {
         $('#shift-right-button').click(_matrix.shiftRight);
 
         $('.leds-case').click(function () {
-            // const themeName = $(this).attr('id');
-            // $('body').removeClass('red-leds yellow-leds green-leds blue-leds white-leds black-leds').addClass(themeName);
+            const themeName = $(this).attr('id');
+            setColor(themeName);
+            _stateManager.updateState({color: themeName})
 
         });
 
@@ -26,7 +29,16 @@ function Controls() {
         });
     }
 
+    function setColor(color) {
+        $('body').removeClass('red-leds yellow-leds green-leds blue-leds white-leds black-leds').addClass(color);
+    }
+
+    function stateChanged(state) {
+        setColor(state.color);
+    }
+
     return {
-        init: init
+        init: init,
+        stateChanged: stateChanged,
     }
 }

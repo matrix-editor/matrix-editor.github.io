@@ -7,7 +7,7 @@ function StateManager() {
         const hashStateString = window.location.hash.slice(1);
 
         if (hashStateString !== _stateString) {
-            const tmp = hashStateString.match(/W(\d+)H(\d+)C(\d+)D([A-Z0-9]*)/);
+            const tmp = hashStateString.match(/W(\d+)H(\d+)C(.+)D([A-Z0-9]*)/);
             if (tmp) {
                 setState({
                     width: tmp[1],
