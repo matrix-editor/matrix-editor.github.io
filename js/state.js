@@ -1,29 +1,47 @@
 function State() {
-    let _matrix;
-    let savedHashState;
+    let onStateChanged;
+    let state = {
+        width: 8,
+        height: 8,
+        data: ''
+    };
+    let stateString;
 
     function loadState() {
-        const state = window.location.hash.slice(1);
-        if (state !== savedHashState) {
-            savedHashState = state;
-            console.log('Load state', savedHashState);
-            _matrix.loadFromCompactString(savedHashState);
+        const hashStateString = window.location.hash.slice(1);
+
+        if (hashStateString !== stateString) {
+            const tmp = hashStateString.match(/W(\d+)H(\d+)D([A-Z0-9]*)/);
+            if (tmp) {
+                state = {
+                    width: tmp[1],
+                    height: tmp[2],
+                    data: tmp[3]
+                };
+                stateString = hashStateString;
+                console.log('Loaded state', stateString);
+                onStateChanged(state);
+            } else {
+                console.error('Invalid state', hashStateString);
+            }
         }
     }
 
-    function saveState(compressedString) {
-        window.location.hash = savedHashState = compressedString;
-        console.log('Save state', savedHashState);
+    function setState(newState) {
+        state = {...state, ...newState};
+        stateString = 'W' + state.width + 'H' + state.height + 'D' + state.data;
+        window.location.hash = stateString;
+        console.log('Save state', stateString);
     }
 
-    function init(matrix) {
-        _matrix = matrix;
+    function init(onStateChangedCallback) {
+        onStateChanged = onStateChangedCallback;
         $(window).on('hashchange', loadState);
         loadState();
     }
 
     return {
         init: init,
-        saveState: saveState
+        setState: setState
     }
 }

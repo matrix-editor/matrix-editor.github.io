@@ -61,7 +61,10 @@
         const state = State();
 
         matrix.init(state);
-        state.init(matrix);
+
+        state.init(function (state) {
+            matrix.loadFromCompactString(state.data);
+        });
         controls.init(matrix);
     });
 </script>

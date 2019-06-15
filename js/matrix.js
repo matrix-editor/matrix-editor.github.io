@@ -78,7 +78,7 @@ function Matrix() {
 
     function renderAndSaveState() {
         render();
-        _state.saveState(bitmap.toCompactString());
+        _state.setState({data: bitmap.toCompactString()});
     }
 
     function setupControls() {
