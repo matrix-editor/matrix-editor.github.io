@@ -4,6 +4,7 @@ function StateManager() {
     let _stateString;
 
     function loadState() {
+        console.log('loadState');
         const hashStateString = window.location.hash.slice(1);
 
         if (hashStateString !== _stateString) {

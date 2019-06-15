@@ -2,6 +2,14 @@ function Controls() {
     let _matrix;
     let _stateManager;
 
+    const _themes = ['red-leds',
+        'yellow-leds',
+        'green-leds',
+        'blue-leds',
+        'white-leds',
+        'black-leds'
+    ];
+
     function init(stateManager, matrix) {
         _stateManager = stateManager;
         _matrix = matrix;
@@ -14,18 +22,20 @@ function Controls() {
         $('#shift-right-button').click(_matrix.shiftRight);
 
         $('.leds-case').click(function () {
-            const themeName = $(this).attr('id');
-            setColor(themeName);
-            _stateManager.updateState({color: themeName})
+            setColor($(this).attr('id'));
+            const themeName = _themes.indexOf($(this).attr('id'));
 
+            updateState({color: themeName});
         });
 
         $('#width-input').change(function () {
             _matrix.setup($('#width-input').val() | 0, $('#height-input').val() | 0);
+            updateState({width: $('#width-input').val() | 0});
         });
 
         $('#height-input').change(function () {
             _matrix.setup($('#width-input').val() | 0, $('#height-input').val() | 0);
+            updateState({height: $('#height-input').val() | 0});
         });
     }
 
@@ -34,7 +44,11 @@ function Controls() {
     }
 
     function stateChanged(state) {
-        setColor(state.color);
+        setColor(_themes[state.color]);
+    }
+
+    function updateState(state) {
+        _stateManager.updateState(state)
     }
 
     return {
