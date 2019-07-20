@@ -2,7 +2,7 @@ function Controls() {
     let _matrix;
     let _stateManager;
 
-    const _themes = ['red-leds',
+    const THEMES = ['red-leds',
         'yellow-leds',
         'green-leds',
         'blue-leds',
@@ -23,7 +23,7 @@ function Controls() {
 
         $('.leds-case').click(function () {
             setColor($(this).attr('id'));
-            const themeName = _themes.indexOf($(this).attr('id'));
+            const themeName = THEMES.indexOf($(this).attr('id'));
 
             updateState({color: themeName});
         });
@@ -44,7 +44,7 @@ function Controls() {
     }
 
     function stateChanged(state) {
-        setColor(_themes[state.color]);
+        setColor(THEMES[state.color]);
     }
 
     function updateState(state) {
